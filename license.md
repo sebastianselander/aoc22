@@ -4,8 +4,8 @@ Copyright (c) 2022 Sebastian Selander
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
-in the Software with the only restriction being you are not allowed to earn if
-you are a registered company.
+in the Software with the only restriction being you are not allowed to earn 
+money if you are a registered company.
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
