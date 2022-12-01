@@ -6,28 +6,22 @@ module Day1
 import Data.List (groupBy, sort)
 import Data.Maybe (maybe)
 
--- input :: IO [[Int]]
-input = readFile "Day1/input.txt"
+input :: IO String
+input = readFile "input.txt"
 
-isJusts :: Maybe a -> Maybe a -> Bool
-isJusts (Just a) (Just b) = True
-isJusts _ _ = False
+safeRead :: String -> Int
+safeRead "" = 0
+safeRead x = read x
 
-safeRead :: String -> Maybe Int
-safeRead "" = Nothing
-safeRead x = pure $ read x
-
-solve1 :: IO String -> IO Int
-solve1 inp' = do
-  inp <- map safeRead . lines <$> inp'
-  pure $
-    head . reverse . sort . map sum . (map (map (maybe 0 id))) . groupBy isJusts $
+solve1 :: IO Int
+solve1 = do
+  inp <- map safeRead . lines <$> input
+  pure . head . reverse . sort . map sum . groupBy (\a b -> a > 0 && b > 0) $
     inp
 
-solve2 :: IO String -> IO Int
-solve2 inp' = do
-  inp <- map safeRead . lines <$> inp
-  let (a:b:c:xs') =
-        reverse . sort . map sum . (map (map (maybe 0 id))) . groupBy isJusts $
-        inp
+solve2 :: IO Int
+solve2 = do
+  inp <- map safeRead . lines <$> input
+  let (a:b:c:_) =
+        reverse . sort . map sum . groupBy (\a b -> a > 0 && b > 0) $ inp
   pure $ a + b + c
