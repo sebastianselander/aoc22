@@ -12,8 +12,8 @@ path = "/Day01/input.txt"
 parseInput :: String -> IO [[Int]]
 parseInput file = map (map read) . splitOn [""] . lines <$> getInput file
 
-solve1 :: IO Int
-solve1 = maximum . map sum <$> parseInput path
+solve1 :: IO String
+solve1 = show . maximum . map sum <$> parseInput path
 
-solve2 :: IO Int
-solve2 = sum . take 3 . reverse . sort . map sum <$> parseInput path
+solve2 :: IO String
+solve2 = show . sum . take 3 . reverse . sort . map sum <$> parseInput path

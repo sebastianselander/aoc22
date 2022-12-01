@@ -10,7 +10,7 @@ main = do
     p1 <- D.solve1
     p2 <- D.solve2
     putStrLn ""
-    putStrLn $ "Part one: " <> (show p1)
-    putStrLn $ "Part two: " <> (show p2)
+    putStrLn $ "Part one: " <> p1
+    putStrLn $ "Part two: " <> p2
     return ()
 

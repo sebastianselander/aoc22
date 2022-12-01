@@ -15,7 +15,7 @@ else
     else
         mkdir $DIR
         touch $FILE
-        # curl --cookie ~/Downloads/aocookies.txt https://adventofcode.com/2022/day/$DAYNUMBER/input >> $HOME/Documents/git/aoc22/src/Day$DAYNUMBER/input.txt
+        curl --cookie ~/Downloads/aocookies.txt https://adventofcode.com/2022/day/$DAYNUMBER/input >> $HOME/Documents/git/aoc22/src/Day$DAYNUMBER/input.txt
         cp $TEMPLATE $DIR/Day$DAYNUMBER.hs
         sed -i "s/dayNumber = 0/dayNumber = $DAYNUMBER/g" $FILE
         sed -i "s/module Template/module Day$DAYNUMBER.Day$DAYNUMBER/g" $FILE
@@ -24,4 +24,3 @@ else
         echo "\n Files generated!"
     fi
 fi
-
