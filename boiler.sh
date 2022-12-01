@@ -18,6 +18,7 @@ else
         cp $TEMPLATE $DIR/Day$DAYNUMBER.hs
         sed -i "s/dayNumber = 0/dayNumber = $DAYNUMBER/g" $FILE
         sed -i "s/module Template/module Day$DAYNUMBER.Day$DAYNUMBER/g" $FILE
+        echo "\n Files generated!"
     fi
 fi
 
