@@ -3,12 +3,12 @@
 module Main where
 
 import Misc qualified as M
-import Day01.Day01 qualified as D1
+import Day01.Day01 qualified as D
 
 main :: IO ()
 main = do
-    p1 <- D1.solve1
-    p2 <- D1.solve2
+    p1 <- D.solve1
+    p2 <- D.solve2
     putStrLn ""
     putStrLn $ "Part one: " <> (show p1)
     putStrLn $ "Part two: " <> (show p2)

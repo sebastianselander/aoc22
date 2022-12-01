@@ -12,7 +12,7 @@ path :: String
 path = "/Day" <> show dayNumber <> "/input.txt"
 
 solve1 :: IO Int
-solve1 = undefined
+solve1 = return 0
 
 solve2 :: IO Int
-solve2 = undefined
+solve2 = return 0
