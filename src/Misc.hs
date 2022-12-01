@@ -1,12 +1,10 @@
-module MyLib where
+module Misc
+  ( getInput
+  , module Data.List.Split
+  ) where
 
-import System.Directory
+import Data.Char
+import Data.List.Split
 
 getInput :: String -> IO String
-getInput file = readFile file
-
-splitOn :: Char -> String -> [String]
-splitOn c str =
-  case break (== c) str of
-    (a, c:b) -> a : splitOn c b
-    (a, "") -> [a]
+getInput file = readFile $ "/home/sebastian/Documents/git/aoc22/src/" <> file

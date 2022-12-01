@@ -2,10 +2,15 @@
 
 module Main where
 
-import MyLib qualified as M
-import Day1 qualified as D1
+import Misc qualified as M
+import Day01.Day01 qualified as D1
 
 main :: IO ()
-main = putStrLn ("Part one: " <> show D1.solve1)
-    >> putStrLn ("Part two: " <> show D1.solve2)
+main = do
+    p1 <- D1.solve1
+    p2 <- D1.solve2
+    putStrLn ""
+    putStrLn $ "Part one: " <> (show p1)
+    putStrLn $ "Part two: " <> (show p2)
+    return ()
 

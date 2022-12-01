@@ -21,10 +21,21 @@ maintainer:         sebastian.selander@gmail.com
 -- category:
 extra-source-files: README.md
 
+common extensions
+    default-extensions:
+        ImportQualifiedPost
+        OverloadedLists
+        OverloadedStrings
+        TupleSections
+        LambdaCase
+
 library
+    import:
+        extensions
+
     exposed-modules:
-        MyLib
-        Day1
+        Misc
+        Day01.Day01
 
     -- Modules included in this library but not exported.
     -- other-modules:
@@ -32,18 +43,18 @@ library
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
     build-depends:
-        base ^>=4.15.1.0,
-        containers
+        base ^>=4.17.0.0,
+        containers,
+        split
 
     hs-source-dirs:   src
 
-    default-extensions: ImportQualifiedPost
-                        TupleSections
-                        LambdaCase
-
-    default-language: Haskell2020
+    default-language: Haskell2010
 
 executable aoc22
+    import:
+        extensions
+
     main-is:          Main.hs
 
     -- Modules included in this executable, other than Main.
@@ -52,7 +63,7 @@ executable aoc22
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
     build-depends:
-        base ^>=4.15.1.0,
+        base ^>=4.17.0.0,
         aoc22
 
     hs-source-dirs:   app
