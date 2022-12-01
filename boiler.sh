@@ -1,6 +1,8 @@
 #!/bin/bash
-echo "Provide a number for the day to set up"
+echo "Day number:"
 read DAYNUMBER
+echo "Curl? [y/n]"
+read WITHCURL
 
 PROJECT=$HOME/Documents/git/aoc22
 DIR=$HOME/Documents/git/aoc22/src/Day$DAYNUMBER
@@ -15,12 +17,19 @@ else
     else
         mkdir $DIR
         touch $FILE
-        curl --cookie ~/Downloads/aocookies.txt https://adventofcode.com/2022/day/$DAYNUMBER/input >> $HOME/Documents/git/aoc22/src/Day$DAYNUMBER/input.txt
+
+        if [ "$WITHCURL" = 'y' ]; then
+                echo "Curling...curl!"
+                echo ""
+                curl --cookie ~/Downloads/aocookies.txt https://adventofcode.com/2022/day/$DAYNUMBER/input >> $HOME/Documents/git/aoc22/src/Day$DAYNUMBER/input.txt
+        fi
+
         cp $TEMPLATE $DIR/Day$DAYNUMBER.hs
         sed -i "s/dayNumber = 0/dayNumber = $DAYNUMBER/g" $FILE
         sed -i "s/module Template/module Day$DAYNUMBER.Day$DAYNUMBER/g" $FILE
         sed -i "s/Day\d*.Day\d*/Day$DAYNUMBER.Day$DAYNUMBER/g" $PROJECT/app/Main.hs
         sed -i "s/import Day.*\.Day.* qualified as D/import Day$DAYNUMBER.Day$DAYNUMBER qualified as D/g" $PROJECT/app/Main.hs
-        echo "\n Files generated!"
+        echo ""
+        echo "Files generated!"
     fi
 fi
