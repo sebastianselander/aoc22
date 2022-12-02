@@ -2,4 +2,5 @@ dist-newstyle/
 *.o
 *.hi
 input.txt
+aocookies.txt
 
