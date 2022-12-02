@@ -5,8 +5,8 @@ module Template
 
 import Misc
 
-solve1 :: String
-solve1 = "unsolved"
+solve1 :: String -> String
+solve1 = const "unsolved"
 
-solve2 :: String
-solve2 = "unsolved"
+solve2 :: String -> String
+solve2 = const "unsolved"

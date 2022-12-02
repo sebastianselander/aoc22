@@ -1,5 +1,3 @@
-{-# LANGUAGE LambdaCase #-}
-
 module Day2.Day2
   ( solve1
   , solve2
