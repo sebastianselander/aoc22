@@ -3,7 +3,7 @@
 module Main where
 
 import Misc qualified as M
-import Day01.Day01 qualified as D
+import Day02.Day02 qualified as D
 
 main :: IO ()
 main = do
