@@ -5,14 +5,8 @@ module Template
 
 import Misc
 
-dayNumber :: Int
-dayNumber = 0
+solve1 :: String
+solve1 = "unsolved"
 
-path :: String
-path = "/Day" <> show dayNumber <> "/input.txt"
-
-solve1 :: IO String
-solve1 = return 0
-
-solve2 :: IO String
-solve2 = return 0
+solve2 :: String
+solve2 = "unsolved"
