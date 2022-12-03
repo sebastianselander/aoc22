@@ -21,6 +21,11 @@ maintainer:         sebastian.selander@gmail.com
 -- category:
 extra-source-files: README.md
 
+common warnings
+    ghc-options:
+        -Wall
+
+
 common extensions
     default-extensions:
         ImportQualifiedPost
@@ -31,7 +36,8 @@ common extensions
 
 library
     import:
-        extensions
+        extensions,
+        warnings
 
     exposed-modules:
         Misc
@@ -77,7 +83,8 @@ library
 
 executable aoc22
     import:
-        extensions
+        extensions,
+        warnings
 
     main-is:          Main.hs
 
