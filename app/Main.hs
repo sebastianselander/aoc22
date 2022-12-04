@@ -2,7 +2,6 @@
 
 module Main where
 
-import Misc qualified as M
 import Day4.Day4 qualified as D
 
 input :: IO FilePath
