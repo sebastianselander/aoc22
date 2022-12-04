@@ -5,7 +5,7 @@ module Main where
 import Day4.Day4 qualified as D
 
 input :: IO FilePath
-input = readFile $ "/home/sebastian/Documents/git/aoc22/src/" <> "Day4" <> "/input.txt"
+input = readFile $ "src/" <> "Day4" <> "/input.txt"
 
 main :: IO ()
 main = do
