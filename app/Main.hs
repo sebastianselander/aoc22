@@ -3,10 +3,10 @@
 module Main where
 
 import Misc qualified as M
-import Day3.Day3 qualified as D
+import Day4.Day4 qualified as D
 
 input :: IO FilePath
-input = readFile $ "/home/sebastian/Documents/git/aoc22/src/" <> "Day3" <> "/input.txt"
+input = readFile $ "/home/sebastian/Documents/git/aoc22/src/" <> "Day4" <> "/input.txt"
 
 main :: IO ()
 main = do

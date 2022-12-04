@@ -29,3 +29,6 @@ solve2 =
     split (a:b:c:rest) = [a, b, c] : split rest
     common :: [String] -> String
     common (a:b:c:_) = intersect (intersect a b) c
+
+think :: String
+think = "hej"
