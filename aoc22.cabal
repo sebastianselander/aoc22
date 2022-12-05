@@ -45,7 +45,7 @@ library
         Day2.Day2
         Day3.Day3
         Day4.Day4
-     -- Day5.Day5
+        Day5.Day5
      -- Day6.Day6
      -- Day7.Day7
      -- Day8.Day8
@@ -75,6 +75,7 @@ library
     build-depends:
         base ^>=4.17.0.0,
         containers,
+        extra,
         split
 
     hs-source-dirs:   src
