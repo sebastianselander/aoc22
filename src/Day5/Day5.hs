@@ -7,10 +7,6 @@ import Misc
 import System.IO.Unsafe (unsafePerformIO)
 import Data.Map qualified as M
 
-inp :: String
-inp = unsafePerformIO $ readFile "src/Day5/input.txt"
-
--- parse :: String -> [String]
 parseCrates :: String -> M.Map Int String
 parseCrates = M.fromList . zip [1..9] . filter (not . null) . map (filter isUpper) . transpose . take 8 . lines
 
@@ -43,7 +39,7 @@ runInstr2 instr crates = crates'
     (Just tos)    = M.lookup (to instr) crates
     crates'       = M.insert (from instr) (drop (amount instr) froms) $ M.insert (to instr) ((take (amount instr) froms) ++ tos) crates
 
--- solve1 :: String -> String
+solve1 :: String -> String
 solve1 str = map (head . snd) $ M.toList $ foldl' (\acc x -> runInstr1 x acc) (parseCrates str) (parseInstr str)
 
 solve2 :: String -> String
