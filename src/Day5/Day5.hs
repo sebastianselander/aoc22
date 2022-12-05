@@ -42,8 +42,11 @@ runInstr f instr crates = updateCrate crates
     tos = fromMaybe (error "fail") $ M.lookup (to instr) crates
     updateCrate = M.insert (from instr) (drop (amount instr) froms) . M.insert (to instr) (f (take (amount instr) froms) ++ tos)
 
+solve :: (String -> String) -> String -> String
+solve f = map (head . snd) . M.toList . uncurry (foldl' (flip (runInstr f))) . (parseCrates &&& parseInstr)
+
 solve1 :: String -> String
-solve1 = map (head . snd) . M.toList . uncurry (foldl' (flip (runInstr reverse))) . (parseCrates &&& parseInstr)
+solve1 = solve reverse
 
 solve2 :: String -> String
-solve2 = map (head . snd) . M.toList . uncurry (foldl' (flip (runInstr id))) . (parseCrates &&& parseInstr)
+solve2 = solve id
