@@ -4,6 +4,7 @@ module Misc
   , module Data.List
   , module Data.Function
   , module Data.Maybe
+  , module Data.Bool
   , fullyContained
   , overlaps
   ) where
@@ -13,6 +14,7 @@ import Data.Function
 import Data.List
 import Data.List.Split
 import Data.Maybe
+import Data.Bool
 
 fullyContained :: Ord a => (a, a) -> (a, a) -> Bool
 fullyContained (a, b) (c, d) = (a <= c && b >= d) || (c <= a && d >= b)

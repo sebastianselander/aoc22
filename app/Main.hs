@@ -2,10 +2,10 @@
 
 module Main where
 
-import Day5.Day5 qualified as D
+import Day6.Day6 qualified as D
 
 input :: IO FilePath
-input = readFile $ "src/" <> "Day5" <> "/input.txt"
+input = readFile $ "src/" <> "Day6" <> "/input.txt"
 
 main :: IO ()
 main = do
