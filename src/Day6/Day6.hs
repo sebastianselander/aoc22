@@ -5,19 +5,15 @@ module Day6.Day6
 
 import Misc
 
-check1 :: Int -> String -> Int
-check1 count (a:b:c:d:xs) =
-    bool count (check1 (count+1) (b:c:d:xs) ((length $ nub [a,b,c,d]) == 4)
-
-check2 :: Int -> String -> Int
-check2 count (a:b:c:d:e:f:g:h:i:j:k:l:m:n:xs) =
+check :: Int -> Int -> String -> Int
+check count amount xs =
     bool
-        (check2 (count+1) (b:c:d:e:f:g:h:i:j:k:l:m:n:xs))
+        (check (count+1) amount (tail xs))
         count
-        ((length $ nub [a,b,c,d,e,f,g,h,i,j,k,l,m,n]) == 14)
+        ((length $ nub $ take amount xs) == amount)
 
 solve1 :: String -> String
-solve1 = show . check1 4
+solve1 = show . check 4 4
 
 solve2 :: String -> String
-solve2 = show . check2 14
+solve2 = show . check 14 14
