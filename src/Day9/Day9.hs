@@ -62,8 +62,40 @@ tailMovement tl (prev:cur:xs) = newTail : tailMovement newTail (cur:xs)
     where
       newTail = (tailFollow tl prev cur)
 
+tailFollow' :: (Int,Int) -> (Int,Int) -> (Int,Int)
+tailFollow' (tx,ty) (hx,hy) =
+    case (hx - tx, hy - ty) of
+        (2,2) -> (tx+1,ty+1)
+        (-2,-2) -> (tx-1,ty-1)
+        (2,-2) -> (tx+1,ty-1)
+        (-2,2) -> (tx-1,ty+1)
+
+        (0,2) -> (tx,ty+1)
+        (0,-2) -> (tx,ty-1)
+        (2,0) -> (tx+1,ty)
+        (-2,0) -> (tx-1,ty)
+
+        (1,2) -> (tx+1,ty+1)
+        (2,1) -> (tx+1,ty+1)
+        (1,-2) -> (tx+1,ty-1)
+        (-2,1) -> (tx-1,ty+1)
+
+        (-1,2) -> (tx-1,ty+1)
+        (2,-1) -> (tx+1,ty-1)
+        (-1,-2) -> (tx-1,ty-1)
+        (-2,-1) -> (tx-1,ty-1)
+        _       -> (tx,ty)
+
+tailMovement' :: (Int,Int) -> [(Int,Int)] -> [(Int,Int)]
+tailMovement' tl [cur] = if tailTooFar tl cur then [cur] else []
+tailMovement' tl (prev:cur:xs) = newTail : tailMovement' newTail (cur:xs)
+    where
+      newTail = (tailFollow' tl cur)
+
+sim = nub . last . take 10 . iterate (tailMovement' (0,0)) . hdmvnt . parse
+
 solve1 :: String -> String
 solve1 = show . length . nub . tailMovement (0,0) . hdmvnt . parse
 
 solve2 :: String -> String
-solve2 = const "unsolved"
+solve2 = show . length . sim
