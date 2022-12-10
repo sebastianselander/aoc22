@@ -4,9 +4,12 @@ module Day10.Day10
   ) where
 
 import Misc
+import System.IO.Unsafe
 
 data Instruction = Noop | Cycle | Addx Int
     deriving Show
+
+inp = unsafePerformIO $ readFile "src/Day10/input.txt"
 
 parse :: String -> [Instruction]
 parse = reverse . foldl' (\acc x -> readInstruction x ++ acc) [] . lines
@@ -25,13 +28,10 @@ execute x ins = scanl' runInstr x ins
         Cycle -> x
         Addx v -> x + v
 
-sprite :: Int -> (Int,Int,Int)
-sprite i = (i-1,i,i+1)
-
-toPixel :: (Int,(Int,Int,Int)) -> Char
-toPixel (a,(b,c,d)) = if a `elem` ([b,c,d] :: [Int])
-                        then '#'
-                        else '.'
+toPixel :: (Int,Int) -> Char
+toPixel (a,b) = if (a - b) `elem` ([-1,0,1] :: [Int])
+                  then '#'
+                  else '.'
 
 solve1 :: String -> String
 solve1 str = show $ sum ([ 20 * ran !! 19
@@ -45,4 +45,4 @@ solve1 str = show $ sum ([ 20 * ran !! 19
     ran = execute 1 . parse $ str
 
 solve2 :: String -> String
-solve2 = show . chunksOf 40 . map toPixel . zip (cycle [0..39]) . map sprite . execute 1. parse
+solve2 = show chunksOf 40 . map toPixel . zip (cycle [0..39]) . execute 1. parse
