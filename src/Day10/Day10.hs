@@ -4,12 +4,9 @@ module Day10.Day10
   ) where
 
 import Misc
-import System.IO.Unsafe
 
 data Instruction = Noop | Cycle | Addx Int
     deriving Show
-
-inp = unsafePerformIO $ readFile "src/Day10/input.txt"
 
 parse :: String -> [Instruction]
 parse = reverse . foldl' (\acc x -> readInstruction x ++ acc) [] . lines
@@ -24,9 +21,8 @@ execute x ins = scanl' runInstr x ins
     where
       runInstr :: Int -> Instruction -> Int
       runInstr x = \case
-        Noop -> x
-        Cycle -> x
         Addx v -> x + v
+        _      -> x
 
 toPixel :: (Int,Int) -> Char
 toPixel (a,b) = if (a - b) `elem` ([-1,0,1] :: [Int])
@@ -45,4 +41,4 @@ solve1 str = show $ sum ([ 20 * ran !! 19
     ran = execute 1 . parse $ str
 
 solve2 :: String -> String
-solve2 = show chunksOf 40 . map toPixel . zip (cycle [0..39]) . execute 1. parse
+solve2 = show . chunksOf 40 . map toPixel . zip (cycle [0..39]) . execute 1. parse
