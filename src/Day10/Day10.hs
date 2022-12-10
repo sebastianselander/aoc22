@@ -26,8 +26,8 @@ execute x ins = scanl' runInstr x ins
 
 toPixel :: (Int,Int) -> Char
 toPixel (a,b) = if (a - b) `elem` ([-1,0,1] :: [Int])
-                  then '#'
-                  else '.'
+                  then ' '
+                  else '█'
 
 solve1 :: String -> String
 solve1 str = show $ sum ([ 20 * ran !! 19
