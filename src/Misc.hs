@@ -7,6 +7,7 @@ module Misc
   , module Data.Bool
   , fullyContained
   , overlaps
+  , unsafePerformIO
   ) where
 
 import Data.Char
@@ -15,6 +16,7 @@ import Data.List
 import Data.List.Split
 import Data.Maybe
 import Data.Bool
+import System.IO.Unsafe (unsafePerformIO)
 
 fullyContained :: Ord a => (a, a) -> (a, a) -> Bool
 fullyContained (a, b) (c, d) = (a <= c && b >= d) || (c <= a && d >= b)
