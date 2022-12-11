@@ -77,7 +77,7 @@ library
         containers,
         extra,
         split,
-        ghcid
+        time
 
     hs-source-dirs:   src
 
