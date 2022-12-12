@@ -30,15 +30,12 @@ neighborIndex (row,col) = [ (row, col - 1)
 getNeighbors :: Index -> Graph -> [Index]
 getNeighbors idx m = map fst
                    . filter (reachable cur . snd)
-                   . map tupFJ
+                   . map (second fromJust)
                    . filter (isJust . snd)
                    . zip (neighborIndex idx)
                    . map (flip M.lookup m)
                    $ neighborIndex idx
     where
-      tupFJ :: (a,Maybe b) -> (a,b)
-      tupFJ (a, Nothing) = error "tupFJ failed"
-      tupFJ (a, Just x) = (a,x)
       cur = m M.! idx
       reachable 'S' d = reachable 'a' d
       reachable c 'E' = reachable c 'z'

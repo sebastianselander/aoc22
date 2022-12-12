@@ -5,6 +5,7 @@ module Misc
   , module Data.Function
   , module Data.Maybe
   , module Data.Bool
+  , module Data.Bifunctor
   , fullyContained
   , overlaps
   , unsafePerformIO
@@ -19,6 +20,7 @@ import Data.Maybe
 import Data.Bool
 import System.IO.Unsafe (unsafePerformIO)
 import Debug.Trace (trace)
+import Data.Bifunctor
 
 fullyContained :: Ord a => (a, a) -> (a, a) -> Bool
 fullyContained (a, b) (c, d) = (a <= c && b >= d) || (c <= a && d >= b)
