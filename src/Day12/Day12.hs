@@ -13,11 +13,6 @@ type Graph = M.Map Index Char
 type Queue = PQ.MinQueue (Int,Index)
 type Visited = S.Set Index
 
-inp = unsafePerformIO $ readFile "src/Day12/input.txt"
-ex = unsafePerformIO $ readFile "src/Day12/ex.txt"
-
-
-
 parse :: String -> Graph
 parse = M.fromList . concat . indexify 0 . lines
     where
@@ -49,27 +44,35 @@ getNeighbors idx m = map fst
       reachable c 'E' = reachable c 'z'
       reachable c d = (fromEnum c - fromEnum d) >= 0 || (fromEnum d - fromEnum c) == 1
 
-dijk :: Graph -> Queue -> Visited -> Int
+dijk :: Graph -> Queue -> Visited -> Maybe Int
 dijk grph queue visited = case PQ.getMin queue of
-    Nothing -> 0
-    Just (dist,idx) | grph M.! idx == 'E' -> dist
+    Nothing -> Nothing
+    Just (dist,idx) | grph M.! idx == 'E' -> pure dist
                     | idx `S.member` visited -> dijk grph (PQ.deleteMin queue) visited
-                    | otherwise ->  dijk
-                                    grph
-                                    (foldl' (flip PQ.insert) queue (zip (repeat (dist + 1)) (getNeighbors idx grph)))
-                                    (S.insert idx visited)
-    where
-      ctrace x = trace (show x) x
+                    | otherwise -> dijk
+                                   grph
+                                   (queue' dist idx)
+                                   (S.insert idx visited)
+  where
+    queue' dist idx =
+        foldl' (flip PQ.insert) queue (zip (repeat (dist + 1)) (getNeighbors idx grph))
 
 solve1 :: String -> String
-solve1 str = show $ dijk grph (PQ.singleton (0,(20,0))) S.empty
+solve1 str = stringify (dijk grph (PQ.singleton (0,start)) S.empty)
     where
       grph = parse str
+      start = fst . head . filter (\(a,b) -> b=='S') $ M.toList grph
+      stringify = \case
+        Nothing -> "Failed to find path"
+        Just x -> show x
 
 solve2 :: String -> String
-solve2 str = show $ minimum $ filter (> 0) $ map (\x -> dijk grph (PQ.singleton (0,x)) S.empty) allStarts
+solve2 str = show
+           . fromJust
+           . minimum
+           . filter isJust
+           $ map (\x -> dijk grph (PQ.singleton (0,x)) S.empty) allStarts
     where
       grph = parse str
       allStarts :: [Index]
       allStarts = map fst $ filter (\(a,b) -> b=='a') $ M.toList grph
-
