@@ -1,3 +1,2 @@
- :set -package aoc22
-import Day5.Day5
-:set prompt "> "
+:set -package aoc22
+:set prompt "aoc> "
