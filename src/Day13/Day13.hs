@@ -20,14 +20,10 @@ instance Show Packet where
 
 instance FromJSON Packet where
   parseJSON (Number n) = pure $ V (fromJust $ toBoundedInteger n)
-  parseJSON as@(Array arr) = withArray "List" (\a -> List . toList <$> traverse parseJSON a) as
+  parseJSON as@(Array arr) = withArray undefined (\a -> List . toList <$> traverse parseJSON a) as
 
 parse :: String -> [Packet]
 parse = map (fromJust . decodeStrict . C.pack) . filter (not . null) . lines
-
-tup :: [a] -> [(a,a)]
-tup []       = []
-tup (x:y:ys) = (x,y) : tup ys
 
 data Opt = Ok | Cont | Bad
     deriving Show
@@ -64,16 +60,19 @@ solve1 = show
        . filter (isOk . snd)
        . zip ([1..] :: [Int])
        . map cmp
-       . tup
+       . blockOf2
        . parse
 
 solve2 :: String -> String
 solve2 = show
        . uncurry addM
-       . bimap (fmap (+1)) (fmap (+1))
-       . (findIndex (== (List [List [V 6]])) &&& (findIndex (== (List [List [V 2]]))))
+       . both (fmap (+1))
+       . (findIndex (== delimiter1) &&& (findIndex (== delimiter2)))
        . sortBy (\a b -> cmpOrd (cmp (a,b)))
-       . (\xs -> (List [List [V 6]]) : (List [List [V 2]]) : xs)
+       . (:) delimiter2
+       . (:) delimiter1
        . parse
     where
       addM (Just x) (Just y) = x * y
+      delimiter1 = List [List [V 6]]
+      delimiter2 = List [List [V 2]]
