@@ -10,6 +10,7 @@ module Misc
   , overlaps
   , unsafePerformIO
   , trace
+  , readMaybe
   ) where
 
 import Data.Char
@@ -21,6 +22,7 @@ import Data.Bool
 import System.IO.Unsafe (unsafePerformIO)
 import Debug.Trace (trace)
 import Data.Bifunctor
+import Text.Read (readMaybe)
 
 fullyContained :: Ord a => (a, a) -> (a, a) -> Bool
 fullyContained (a, b) (c, d) = (a <= c && b >= d) || (c <= a && d >= b)
