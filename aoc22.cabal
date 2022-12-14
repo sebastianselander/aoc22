@@ -82,7 +82,8 @@ library
         text,
         aeson,
         scientific,
-        bytestring
+        bytestring,
+        unordered-containers
 
 
     hs-source-dirs:   src

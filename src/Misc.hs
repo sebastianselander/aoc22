@@ -40,7 +40,7 @@ blockOf2 :: [a] -> [(a,a)]
 blockOf2 []       = []
 blockOf2 (x:y:ys) = (x,y) : blockOf2 ys
 
-addT :: Num a => (a,a) -> (a,a) -> (a,a)
-addT (a,b) (c,d) = (a+c,b+d)
+addTuples :: Num a => (a,a) -> (a,a) -> (a,a)
+addTuples (a,b) (c,d) = (a+c,b+d)
 
 ctrace x = trace (show x) x
