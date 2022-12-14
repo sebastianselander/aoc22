@@ -11,9 +11,9 @@ type Index = (Int,Int)
 
 stretch :: Int -> [Int]
 stretch n = case signum n of
-    1 -> [ 0 .. n]
+    1 -> [ 0 .. n ]
     0 -> repeat 0
-    (-1) -> [0, (-1) .. n]
+    (-1) -> [ 0, (-1) .. n ]
 
 wall :: Index -> Index -> [Index]
 wall src@(srcx,srcy) (dstx,dsty) =
@@ -40,7 +40,7 @@ simulate b flr (500,0) set | (500,0) `S.member` set = 0
 simulate b flr (x,y) set   | b && flr + 1 == y = 1 + simulate b flr (500,0) (S.insert (x,y) set)
                            | not b && y >= flr = 0
 simulate b flr (x,y) set =
-    case map (flip S.member set) ([(x - 1, y + 1), (x, y + 1), (x + 1, y + 1)] :: [Index]) of
+    case map (flip S.member set) ([ (x - 1, y + 1), (x, y + 1), (x + 1, y + 1) ] :: [Index]) of
         [_, False, _] -> simulate b flr (x, y + 1) set
         [False, _, _] -> simulate b flr (x - 1, y + 1) set
         [_, _, False] -> simulate b flr (x + 1, y + 1) set
