@@ -37,9 +37,9 @@ findFloor = maximum . map snd . S.toList
 
 simulate :: Bool -> Int -> Index -> HashSet Index -> Int
 simulate b flr (500,0) set | (500,0) `S.member` set = 0
-simulate b flr (x,y)   set | b && flr + 1 == y = 1 + simulate b flr (500,0) (S.insert (x,y) set)
-                       | not b && y >= flr = 0
-simulate b flr (x,y)   set =
+simulate b flr (x,y) set   | b && flr + 1 == y = 1 + simulate b flr (500,0) (S.insert (x,y) set)
+                           | not b && y >= flr = 0
+simulate b flr (x,y) set =
     case map (flip S.member set) ([(x - 1, y + 1), (x, y + 1), (x + 1, y + 1)] :: [Index]) of
         [_, False, _] -> simulate b flr (x, y + 1) set
         [False, _, _] -> simulate b flr (x - 1, y + 1) set
