@@ -12,6 +12,8 @@ module Misc
   , trace
   , readMaybe
   , both
+  , blockOf2
+  , addT
   ) where
 
 import Data.Char
@@ -37,3 +39,8 @@ both f = bimap f f
 blockOf2 :: [a] -> [(a,a)]
 blockOf2 []       = []
 blockOf2 (x:y:ys) = (x,y) : blockOf2 ys
+
+addT :: Num a => (a,a) -> (a,a) -> (a,a)
+addT (a,b) (c,d) = (a+c,b+d)
+
+ctrace x = trace (show x) x
