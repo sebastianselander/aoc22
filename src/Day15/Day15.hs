@@ -9,9 +9,6 @@ import Text.Megaparsec qualified as P
 import Text.Megaparsec.Char qualified as P
 import Text.Megaparsec.Char.Lexer qualified as L
 
-inp = unsafePerformIO $ readFile "src/Day15/input.txt"
-ex =  unsafePerformIO $ readFile "src/Day15/ex.txt"
-
 parse :: String -> [Sensor]
 parse = fromJust . P.parseMaybe inputP
 
@@ -32,6 +29,9 @@ data Rhombus = Rhomb { north :: (Int,Int)
                      }
     deriving (Show, Eq)
 
+instance Ord Rhombus where
+    compare r1 r2 = east r1 `compare` east r2
+
 
 xBounds :: [Sensor] -> (Int,Int)
 xBounds = go (maxBound,minBound)
@@ -50,9 +50,6 @@ inRhombus (x,y) r = getManhattan (x,y) (center r) <= manh r
 inAny :: (Int,Int) -> [Rhombus] -> Bool
 inAny point = any (inRhombus point)
 
--- 6070131, too high
--- 4390364, too low
-
 solve1 :: String -> String
 solve1 xs = show $ foldl' (\acc x -> if inAny x rhs then 1 + acc else acc) 0 range - 1
     where
@@ -61,24 +58,44 @@ solve1 xs = show $ foldl' (\acc x -> if inAny x rhs then 1 + acc else acc) 0 ran
       range = [ (x,2000000) | x <- [ from .. to ] ]
       rhs = map sensorToRhombus sensors
 
+
 solve2 :: String -> String
-solve2 = const "unsolved"
+solve2 = show
+       . uncurry (+)
+       . first (*4000000)
+       . getPoint (0,0)
+       . sortBy (flip compare)
+       . map sensorToRhombus
+       . parse
 
--- First time megaparsec :)
+skip :: (Int,Int) -> Rhombus -> (Int,Int)
+skip (x,y) rhombjävel = let dist = abs (y - (snd $ center rhombjävel))
+                         in ((1 + (fst $ east rhombjävel)) - dist, y)
 
+inside :: (Int,Int) -> [Rhombus] -> Maybe ((Int,Int),Rhombus)
+inside p []     = Nothing
+inside p (x:xs) = if (inRhombus p x) then Just (p,x) else inside p xs
+
+getPoint :: (Int,Int) -> [Rhombus] -> (Int,Int)
+getPoint p@(x,y) xs = if  x >= 4000000
+                         then getPoint (0,y+1) xs
+                         else if y >= 4000000
+                                then error "Point not found"
+                                else case inside p xs of
+                                    Nothing -> p
+                                    Just (p',r) -> getPoint (skip p' r) xs
+
+
+-- Parser
 type Parser = P.Parsec Void String
-
 
 pointP :: Parser Int
 pointP = do
     _ <- P.many (P.space *> P.letterChar <* P.space)
     _ <- P.char '='
-    neg <- P.optional $ P.char '-'
-    x <- L.decimal
+    x <- L.signed (pure ()) L.decimal
     _ <- P.optional P.punctuationChar
-    case neg of
-        (Just _) -> pure $ x * (-1)
-        _        -> pure x
+    pure x
 
 sensorP :: Parser Sensor
 sensorP = do
