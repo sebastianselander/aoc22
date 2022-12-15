@@ -14,13 +14,12 @@ parse = fromJust . P.parseMaybe inputP
 
 type Sensor = (Int,Int,Int,Int)
 
-data Rhombus = Rhomb { north :: (Int,Int)
-                     , east :: (Int,Int)
-                     , south :: (Int,Int)
-                     , west :: (Int,Int)
-                     , center :: (Int,Int)
-                     , manhattan :: Int
-                     }
+data Rhombus = Rhomb { north     :: (Int, Int)
+                     , east      :: (Int, Int)
+                     , south     :: (Int, Int)
+                     , west      :: (Int, Int)
+                     , center    :: (Int, Int)
+                     , manhattan :: Int }
   deriving (Show, Eq)
 
 instance Ord Rhombus where
