@@ -26,11 +26,11 @@ execute x ins = scanl' runInstr x ins
 
 toPixel :: (Int,Int) -> Char
 toPixel (a,b) = if (a - b) `elem` ([-1,0,1] :: [Int])
-                  then ' '
-                  else '█'
+                  then '#'
+                  else ' '
 
-solve1 :: String -> String
-solve1 str = show $ sum ([ 20 * ran !! 19
+solve1 :: String -> IO ()
+solve1 str = print $ sum ([ 20 * ran !! 19
                          , 60 * ran !! 59
                          , 100 * ran !! 99
                          , 140 * ran !! 139
@@ -40,5 +40,5 @@ solve1 str = show $ sum ([ 20 * ran !! 19
     ran :: [Int]
     ran = execute 1 . parse $ str
 
-solve2 :: String -> String
-solve2 = show . chunksOf 40 . map toPixel . zip (cycle [0..39]) . execute 1. parse
+solve2 :: String -> IO ()
+solve2 = mapM_ putStrLn . chunksOf 40 . map toPixel . zip (cycle [0..39]) . execute 1. parse

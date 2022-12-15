@@ -45,8 +45,8 @@ runInstr f instr crates = updateCrate crates
 solve :: (String -> String) -> String -> String
 solve f = map (head . snd) . M.toList . uncurry (foldl' (flip (runInstr f))) . (parseCrates &&& parseInstr)
 
-solve1 :: String -> String
-solve1 = solve reverse
+solve1 :: String -> IO ()
+solve1 = putStr . solve reverse
 
-solve2 :: String -> String
-solve2 = solve id
+solve2 :: String -> IO ()
+solve2 = putStr . solve id

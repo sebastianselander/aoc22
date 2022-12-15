@@ -53,8 +53,8 @@ isOk :: Opt -> Bool
 isOk Ok = True
 isOk _  = False
 
-solve1 :: String -> String
-solve1 = show
+solve1 :: String -> IO ()
+solve1 = print
        . sum
        . map fst
        . filter (isOk . snd)
@@ -63,8 +63,8 @@ solve1 = show
        . blockOf2
        . parse
 
-solve2 :: String -> String
-solve2 = show
+solve2 :: String -> IO ()
+solve2 = print
        . uncurry addM
        . both (fmap (+1))
        . (findIndex (== delimiter1) &&& (findIndex (== delimiter2)))

@@ -5,8 +5,8 @@ module Template
 
 import Misc
 
-solve1 :: String -> String
+solve1 :: String -> IO ()
 solve1 = const "unsolved"
 
-solve2 :: String -> String
+solve2 :: String -> IO ()
 solve2 = const "unsolved"

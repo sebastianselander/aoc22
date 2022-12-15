@@ -50,8 +50,8 @@ simulate b flr (x,y) set =
 solver :: Bool -> HashSet Index -> Int
 solver b set = simulate b (findFloor set) (500,0) set
 
-solve1 :: String -> String
-solve1 = show . solver False . parse
+solve1 :: String -> IO ()
+solve1 = print . solver False . parse
 
-solve2 :: String -> String
-solve2 = show . solver True . parse
+solve2 :: String -> IO ()
+solve2 = print . solver True . parse

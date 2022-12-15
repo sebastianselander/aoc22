@@ -73,8 +73,8 @@ adjustMnky :: (Integer -> Integer)
            -> M.Map Integer Monkey
 adjustMnky modder (to, item) m = M.adjust (addItem modder item) to m
 
-solve1 :: String -> String
-solve1 = show
+solve1 :: String -> IO ()
+solve1 = print
        . product
        . take 2
        . sortBy (flip compare)
@@ -85,8 +85,8 @@ solve1 = show
        . iterate (playRound id (flip div 3) 0)
        . toMonkeys
 
-solve2 :: String -> String
-solve2 str = show
+solve2 :: String -> IO ()
+solve2 str = print
            . product
            . take 2
            . sortBy (flip compare)

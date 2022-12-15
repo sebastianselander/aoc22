@@ -85,8 +85,8 @@ getPoint p@(x,y) xs
                         Nothing -> p
                         Just (p', r) -> getPoint (skip p' r) xs
 
-solve1 :: String -> String
-solve1 xs = show
+solve1 :: String -> IO ()
+solve1 xs = print
           . (+(-1))
           $ foldl' (\acc x -> if inAny x (map toRhombus (parse xs)) then 1 + acc else acc) 0 range
     where
@@ -95,8 +95,8 @@ solve1 xs = show
       range :: [(Int,Int)]
       range = zip [ from .. to ] (repeat 2000000)
 
-solve2 :: String -> String
-solve2 = show
+solve2 :: String -> IO ()
+solve2 = print
        . uncurry (+)
        . first (*4000000)
        . getPoint (0,0)

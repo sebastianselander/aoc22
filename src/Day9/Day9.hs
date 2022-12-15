@@ -80,16 +80,16 @@ tailMovement tl (cur:xs) = newTail : tailMovement newTail xs
     where
       newTail = (tailFollow tl cur)
 
-solve1 :: String -> String
-solve1 = show
+solve1 :: String -> IO ()
+solve1 = print
        . length
        . nub
        . tailMovement (0,0)
        . hdmvnt
        . parse
 
-solve2 :: String -> String
-solve2 = show
+solve2 :: String -> IO ()
+solve2 = print
        . length
        . nub
        . last

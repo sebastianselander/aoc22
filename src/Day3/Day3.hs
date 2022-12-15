@@ -7,18 +7,18 @@ import Control.Arrow ((&&&))
 import Data.Bool (bool)
 import Misc
 
-solve1 :: String -> String
+solve1 :: String -> IO ()
 solve1 =
-  show .
+  print .
   sum .
   concatMap
     (map (\c -> bool (ord c - 96) (ord c - 38) (isUpper c)) .
      nub . uncurry intersect . uncurry splitAt . (flip div 2 . length &&& id)) .
   lines
 
-solve2 :: String -> String
+solve2 :: String -> IO ()
 solve2 =
-  show .
+  print .
   sum .
   concatMap
     (map (\c -> bool (ord c - 96) (ord c - 38) (isUpper c)) . nub . common) .

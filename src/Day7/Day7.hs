@@ -54,11 +54,11 @@ answer fs dir= do
     (size, dirs) <- M.lookup dir fs
     pure (size : (concatMap (fromMaybe [] . (answer fs)) dirs))
 
-solve1 :: String -> String
-solve1 = show . sum . filter (<100000) . allAnswers . cm
+solve1 :: String -> IO ()
+solve1 = print . sum . filter (<100000) . allAnswers . cm
 
-solve2 :: String -> String
-solve2 str = show . head . dropWhile (\x -> totalsz - x > sz) . sort . allAnswers . cm $ str
+solve2 :: String -> IO ()
+solve2 str = print . head . dropWhile (\x -> totalsz - x > sz) . sort . allAnswers . cm $ str
     where
       sz = 70000000 - 30000000
       totalsz = head . sortBy (flip compare) . allAnswers . cm $ str

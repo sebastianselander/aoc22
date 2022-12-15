@@ -11,8 +11,8 @@ check amount xs = bool
         amount
         ((== amount) . length . nub . take amount $ xs)
 
-solve1 :: String -> String
-solve1 = show . check 4
+solve1 :: String -> IO ()
+solve1 = print . check 4
 
-solve2 :: String -> String
-solve2 = show . check 14
+solve2 :: String -> IO ()
+solve2 = print . check 14

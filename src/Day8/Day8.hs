@@ -53,8 +53,8 @@ check2 idx@(i,j) m = (length $ tkWh (\x -> x < cur) (map ((M.!) m) bcol)) *
       brow = zip (repeat i) [j+1 .. col]
       srow = reverse $ zip (repeat i) [0 .. j-1]
 
-solve1 :: String -> String
-solve1 str = show . sum $ map (\x -> check1 x (parse str)) (M.keys (parse str))
+solve1 :: String -> IO ()
+solve1 str = print . sum $ map (\x -> check1 x (parse str)) (M.keys (parse str))
 
-solve2 :: String -> String
-solve2 str = show . maximum $ map (\x -> check2 x (parse str)) (M.keys (parse str))
+solve2 :: String -> IO ()
+solve2 str = print . maximum $ map (\x -> check2 x (parse str)) (M.keys (parse str))

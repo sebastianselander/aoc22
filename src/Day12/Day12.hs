@@ -54,8 +54,8 @@ dijk grph queue visited = case PQ.getMin queue of
     queue' dist idx =
         foldl' (flip PQ.insert) queue (zip (repeat (dist + 1)) (getNeighbors idx grph))
 
-solve1 :: String -> String
-solve1 str = stringify (dijk grph (PQ.singleton (0,start)) S.empty)
+solve1 :: String -> IO ()
+solve1 str = print $ stringify (dijk grph (PQ.singleton (0,start)) S.empty)
     where
       grph = parse str
       start = fst . head . filter (\(a,b) -> b=='S') $ M.toList grph
@@ -63,8 +63,8 @@ solve1 str = stringify (dijk grph (PQ.singleton (0,start)) S.empty)
         Nothing -> "Failed to find path"
         Just x -> show x
 
-solve2 :: String -> String
-solve2 str = show
+solve2 :: String -> IO ()
+solve2 str = print
            . fromJust
            . minimum
            . filter isJust

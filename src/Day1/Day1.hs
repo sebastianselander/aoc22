@@ -8,8 +8,8 @@ import Misc
 parseInput :: String -> [[Int]]
 parseInput = map (map read) . splitOn [""] . lines
 
-solve1 :: String -> String
-solve1 = show . maximum . map sum . parseInput
+solve1 :: String -> IO ()
+solve1 = print . maximum . map sum . parseInput
 
-solve2 :: String -> String
-solve2 = show . sum . take 3 . reverse . sort . map sum . parseInput
+solve2 :: String -> IO ()
+solve2 = print . sum . take 3 . reverse . sort . map sum . parseInput

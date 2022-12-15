@@ -11,8 +11,8 @@ main :: IO ()
 main = do
     inp <- input
     putStrLn ""
-    putStrLn $ "Part one: " <> D.solve1 inp
-    putStrLn $ "Part two: " <> D.solve2 inp
+    putStrLn "Part one: " >> D.solve1 inp
+    putStrLn "Part two: " >> D.solve2 inp
     putStrLn ""
     return ()
 

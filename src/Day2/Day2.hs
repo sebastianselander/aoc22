@@ -5,9 +5,9 @@ module Day2.Day2
 
 import Misc
 
-solve1 :: String -> String
+solve1 :: String -> IO ()
 solve1 =
-  show .
+  print .
   foldr
     (\(e:_:s:[]) acc ->
        (\x ->
@@ -18,9 +18,9 @@ solve1 =
     0 .
   lines
 
-solve2 :: String -> String
+solve2 :: String -> IO ()
 solve2 =
-  show .
+  print .
   foldr
     (\(e:_:s:[]) acc ->
        (\a b ->
