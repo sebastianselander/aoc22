@@ -21,12 +21,6 @@ maintainer:         sebastian.selander@gmail.com
 -- category:
 extra-source-files: README.md
 
-common warnings
-    ghc-options:
-        -Wall
-        -O2
-
-
 common extensions
     default-extensions:
         ImportQualifiedPost
@@ -56,7 +50,7 @@ library
         Day12.Day12
         Day13.Day13
         Day14.Day14
-     -- Day15.Day15
+        Day15.Day15
      -- Day16.Day16
      -- Day17.Day17
      -- Day18.Day18
@@ -85,7 +79,8 @@ library
         aeson,
         scientific,
         bytestring,
-        unordered-containers
+        unordered-containers,
+        megaparsec
 
 
     hs-source-dirs:   src
@@ -94,8 +89,7 @@ library
 
 executable aoc22
     import:
-        extensions,
-        -- warnings
+        extensions
 
     main-is:          Main.hs
 
