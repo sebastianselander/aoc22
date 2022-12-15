@@ -18,7 +18,7 @@ stretch n = case signum n of
 
 wall :: Index -> Index -> [Index]
 wall src@(srcx,srcy) (dstx,dsty) =
-    map (addTuples src) $ zip (stretch (dstx - srcx)) (stretch (dsty - srcy))
+    map (opPairs (+) src) $ zip (stretch (dstx - srcx)) (stretch (dsty - srcy))
 
 createWalls :: HashSet Index -> [Index] -> HashSet Index
 createWalls s (x:y:ys) = createWalls (foldl' (flip S.insert) s (wall x y)) (y:ys)

@@ -16,7 +16,7 @@ module Misc
   , readMaybe
   , both
   , blockOf2
-  , addTuples
+  , opPairs
   , getManhattan
   ) where
 
@@ -48,8 +48,8 @@ blockOf2 :: [a] -> [(a,a)]
 blockOf2 []       = []
 blockOf2 (x:y:ys) = (x,y) : blockOf2 ys
 
-addTuples :: Num a => (a,a) -> (a,a) -> (a,a)
-addTuples (a,b) (c,d) = (a+c,b+d)
+opPairs :: Num a => (a -> b -> c) -> (a,a) -> (b,b) -> (c,c)
+opPairs f (a,b) (c,d) = (f a c, f b d)
 
 ctrace :: Show a => a -> a
 ctrace x = trace (show x) x
