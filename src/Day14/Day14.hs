@@ -8,6 +8,7 @@ import Data.HashSet (HashSet)
 import Data.HashSet qualified as S
 
 type Index = (Int,Int)
+inp = unsafePerformIO $ readFile "src/Day14/input.txt"
 
 stretch :: Int -> [Int]
 stretch n = case signum n of
