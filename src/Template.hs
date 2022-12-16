@@ -6,7 +6,7 @@ module Template
 import Misc
 
 solve1 :: String -> IO ()
-solve1 = const "unsolved"
+solve1 = putStrLn "unsolved"
 
 solve2 :: String -> IO ()
-solve2 = const "unsolved"
+solve2 = putStrLn "unsolved"
