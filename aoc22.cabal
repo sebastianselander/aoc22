@@ -80,9 +80,8 @@ library
         scientific,
         bytestring,
         unordered-containers,
-        megaparsec
-
-
+        megaparsec,
+        mtl
     hs-source-dirs:   src
 
     default-language: Haskell2010
