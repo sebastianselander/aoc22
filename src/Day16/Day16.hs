@@ -46,8 +46,9 @@ algo mw graph cur acc mins = do
             let current_flow = flowrate (graph M.! cur)
             move <- sequence $ map (\x -> algo mw graph x acc (mins - 1)) (neighbors $ graph M.! cur)
             open <- (algo mw (M.adjust closeValve cur graph) cur (acc + current_flow) (mins - 1))
-            return (max open (maximum move))
-        Just x -> pure x
+            let best = max open (maximum move)
+            return best
+        Just x -> pure $ x
 
 makeMap :: Map Int Int -> IO MapWrapper
 makeMap i = do
