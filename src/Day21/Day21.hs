@@ -12,18 +12,11 @@ import Text.Megaparsec qualified as P
 import Text.Megaparsec.Char qualified as P
 import Text.Megaparsec.Char.Lexer qualified as L
 
-inp = unsafePerformIO $ readFile "src/Day21/input.txt"
-
 type Parser = P.Parsec Void String
 
 data Value = Number Integer | Variable String
-    deriving Show
-
 data Expr = Var Value | Expr Value Op Value
-    deriving Show
-
 data Op = Mul | Div | Add | Sub | Equal
-    deriving Show
 
 opP :: Parser Op
 opP = do
