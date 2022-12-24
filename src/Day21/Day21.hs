@@ -1,3 +1,4 @@
+{-# LANGUAGE ImportQualifiedPost #-}
 module Day21.Day21
   ( solve1
   , solve2
@@ -101,7 +102,7 @@ findGuess m = go (hella_high `div` 2) (hella_high `div` 4) m
        Just (-1) -> go (n - dn) (dn `div` 2) m
        _ -> Nothing
 
--- Run `ghci input.hs` followed by `root`, answer for part 1 done
+-- Make input file .hs then search and replace all `:` with `=`, then load in ghci and run function root
 solve1 :: String -> IO ()
 solve1 str = print $ (flip evalV (Variable "root")) =<< parse str
 

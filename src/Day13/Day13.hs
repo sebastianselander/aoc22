@@ -4,75 +4,69 @@ module Day13.Day13
   ) where
 
 import Misc
-import Data.Aeson
-import Data.Text (unpack)
+import Control.Monad (liftM2)
 import Control.Arrow ((&&&))
-import Data.Scientific (toBoundedInteger)
-import Data.Foldable (toList)
-import Data.ByteString.Char8 qualified as C
 
-data Packet = V Int | List [Packet]
-    deriving Eq
+import Text.Megaparsec qualified as P
+import Text.Megaparsec.Char qualified as P
+import Text.Megaparsec.Char.Lexer qualified as L
 
-instance Show Packet where
-  show (V n) = show n
-  show (List xs) = show xs
+type Parser = P.Parsec Void String
 
-instance FromJSON Packet where
-  parseJSON (Number n) = pure $ V (fromJust $ toBoundedInteger n)
-  parseJSON as@(Array arr) = withArray undefined (\a -> List . toList <$> traverse parseJSON a) as
+data Packet = List [Packet] | Number Int
+    deriving (Show, Eq)
 
-parse :: String -> [Packet]
-parse = map (fromJust . decodeStrict . C.pack) . filter (not . null) . lines
+numberP :: Parser Packet
+numberP = Number <$> L.decimal
 
-data Opt = Ok | Cont | Bad
-    deriving Show
+listP :: Parser Packet
+listP = List <$> (P.char '[' *> ((numberP <|> listP) `P.sepBy` (P.char ',')) <* P.char ']')
 
-cmpOrd :: Opt -> Ordering
-cmpOrd Bad = GT
-cmpOrd Ok = LT
-cmpOrd Cont = EQ
+blockP :: Parser (Packet, Packet)
+blockP = do
+    fst <- listP <* P.eol
+    snd <- listP <* P.eol
+    return (fst, snd)
 
-cmp :: (Packet,Packet) -> Opt
+inputP :: Parser [(Packet, Packet)]
+inputP = P.someTill (P.try (blockP <* (P.char '\n')) <|> (P.try blockP)) P.eof
+
+parse :: String -> [(Packet, Packet)]
+parse = fromMaybe (error "Parsing failed") . P.parseMaybe inputP 
+
+cmp :: (Packet,Packet) -> Ordering
 cmp tup = case tup of
-    (List [], List []) -> Cont
-    (List p1, List []) -> Bad
-    (List [], List p2) -> Ok
+    (List [], List []) -> EQ
+    (List p1, List []) -> GT
+    (List [], List p2) -> LT
     (List (x:xs), List (y:ys)) -> case cmp (x,y) of
-        Bad -> Bad
-        Cont -> cmp (List xs, List ys)
-        Ok ->  Ok
-    (List p1, V n) -> cmp (List p1,List [V n])
-    (V n, List p2) -> cmp (List [V n],List p2)
-    (V n1, V n2) -> case signum $ n2 - n1 of
-        (-1) -> Bad
-        0 -> Cont
-        1 -> Ok
-
-isOk :: Opt -> Bool
-isOk Ok = True
-isOk _  = False
+        EQ -> cmp (List xs, List ys)
+        rest -> rest
+    (List p1, Number n) -> cmp (List p1, List [Number n])
+    (Number n, List p2) -> cmp (List [Number n], List p2)
+    (Number n1, Number n2) -> compare n1 n2
 
 solve1 :: String -> IO ()
 solve1 = print
        . sum
        . map fst
-       . filter (isOk . snd)
+       . filter ((==LT) . snd)
        . zip ([1..] :: [Int])
        . map cmp
-       . blockOf2
        . parse
 
 solve2 :: String -> IO ()
 solve2 = print
-       . uncurry addM
+       . fromMaybe (error "Failed to find indices") 
+       . uncurry (liftM2 (*))
        . both (fmap (+1))
        . (findIndex (== delimiter1) &&& (findIndex (== delimiter2)))
-       . sortBy (\a b -> cmpOrd (cmp (a,b)))
+       . sortBy (curry cmp)
        . (:) delimiter2
        . (:) delimiter1
+       . uncurry (++)
+       . unzip
        . parse
     where
-      addM (Just x) (Just y) = x * y
-      delimiter1 = List [List [V 6]]
-      delimiter2 = List [List [V 2]]
+      delimiter1 = List [List [Number 6]]
+      delimiter2 = List [List [Number 2]]
