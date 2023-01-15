@@ -21,7 +21,7 @@ numberP :: Parser Packet
 numberP = Number <$> L.decimal
 
 listP :: Parser Packet
-listP = List <$> (P.char '[' *> ((numberP <|> listP) `P.sepBy` (P.char ',')) <* P.char ']')
+listP = List <$> (P.char '[' *> (numberP <|> listP) `P.sepBy` P.char ',' <* P.char ']')
 
 blockP :: Parser (Packet, Packet)
 blockP = do
@@ -30,7 +30,7 @@ blockP = do
   return (fst, snd)
 
 inputP :: Parser [(Packet, Packet)]
-inputP = P.someTill (P.try (blockP <* (P.char '\n')) <|> (P.try blockP)) P.eof
+inputP = P.someTill (P.try (blockP <* P.char '\n') <|> P.try blockP) P.eof
 
 parse :: String -> [(Packet, Packet)]
 parse = fromMaybe (error "Parsing failed") . P.parseMaybe inputP
@@ -63,7 +63,7 @@ solve2 =
     . fromMaybe (error "Failed to find indices")
     . uncurry (liftM2 (*))
     . both (fmap (+ 1))
-    . (findIndex (== delimiter1) &&& (findIndex (== delimiter2)))
+    . (elemIndex delimiter1 &&& elemIndex delimiter2)
     . sortBy (curry cmp)
     . (:) delimiter2
     . (:) delimiter1
